@@ -1,0 +1,42 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Cron example
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+
+jobs:
+  
+  run-integration-tests:
+ 
+    runs-on: ubuntu-latest
+
+   
+    steps:
+     
+      - uses: actions/checkout@v4
+
+      # Setup nodejs
+      - name: Setup Node.js 12
+        uses: actions/setup-node@v1
+        with: 
+            node-version: "12.x"
+    
+
+      # Install Yarn
+      - name: Install Yarn
+        run: npm install --global yarn
+
+      # Install libaries
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # Run tests
+      - name: Run tests
+        run: yarn test
